@@ -45,7 +45,7 @@
             textBox1.Location = new Point(25, 63);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(736, 95);
+            textBox1.Size = new Size(736, 332);
             textBox1.TabIndex = 1;
             // 
             // FormPonto

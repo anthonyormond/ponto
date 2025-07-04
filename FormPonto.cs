@@ -14,7 +14,7 @@ namespace ControledePonto
     public partial class FormPonto : Form
     {
 
-        static readonly TimeSpan JornadaPadrao = new TimeSpan(9, 30, 0); // 9h30min
+        static readonly TimeSpan JornadaPadrao = new TimeSpan(8, 30, 0); // 9h30min
         
         public FormPonto()
         {

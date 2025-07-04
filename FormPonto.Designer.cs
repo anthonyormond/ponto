@@ -28,24 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            buttonAnalise = new Button();
             textBox1 = new TextBox();
             SuspendLayout();
             // 
-            // button1
+            // buttonAnalise
             // 
-            button1.Location = new Point(25, 34);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Click += button1_Click;
+            buttonAnalise.Location = new Point(25, 34);
+            buttonAnalise.Name = "buttonAnalise";
+            buttonAnalise.Size = new Size(75, 23);
+            buttonAnalise.TabIndex = 0;
+            buttonAnalise.Text = "Analisar ";
+            buttonAnalise.Click += button1_Click;
             // 
             // textBox1
             // 
             textBox1.Location = new Point(25, 63);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(736, 332);
+            textBox1.Size = new Size(763, 366);
             textBox1.TabIndex = 1;
             // 
             // FormPonto
@@ -54,16 +55,16 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(textBox1);
-            Controls.Add(button1);
+            Controls.Add(buttonAnalise);
             Name = "FormPonto";
-            Text = "Form1";
+            Text = "Analise de Horas";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Button button1;
+        private Button buttonAnalise;
         private TextBox textBox1;
     }
 }

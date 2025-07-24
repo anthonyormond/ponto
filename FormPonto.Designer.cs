@@ -41,6 +41,8 @@
             dateTimePickerFim = new DateTimePicker();
             label4 = new Label();
             label5 = new Label();
+            label6 = new Label();
+            maskedTextBoxCargaHoraria = new MaskedTextBox();
             SuspendLayout();
             // 
             // buttonAnalise
@@ -64,7 +66,7 @@
             // 
             textBoxSite.Location = new Point(25, 36);
             textBoxSite.Name = "textBoxSite";
-            textBoxSite.Size = new Size(426, 23);
+            textBoxSite.Size = new Size(292, 23);
             textBoxSite.TabIndex = 2;
             // 
             // ButtonAcessar
@@ -154,11 +156,30 @@
             label5.TabIndex = 13;
             label5.Text = "Data Final";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(333, 18);
+            label6.Name = "label6";
+            label6.Size = new Size(99, 15);
+            label6.TabIndex = 15;
+            label6.Text = "Carga Hora diária";
+            // 
+            // maskedTextBoxCargaHoraria
+            // 
+            maskedTextBoxCargaHoraria.Location = new Point(333, 36);
+            maskedTextBoxCargaHoraria.Mask = "00:00";
+            maskedTextBoxCargaHoraria.Name = "maskedTextBoxCargaHoraria";
+            maskedTextBoxCargaHoraria.Size = new Size(129, 23);
+            maskedTextBoxCargaHoraria.TabIndex = 16;
+            // 
             // FormPonto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 567);
+            Controls.Add(maskedTextBoxCargaHoraria);
+            Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(dateTimePickerFim);
@@ -193,5 +214,7 @@
         private DateTimePicker dateTimePickerFim;
         private Label label4;
         private Label label5;
+        private Label label6;
+        private MaskedTextBox maskedTextBoxCargaHoraria;
     }
 }

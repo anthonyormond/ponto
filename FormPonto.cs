@@ -8,16 +8,19 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ControledePonto
 {
     public partial class FormPonto : Form
     {
 
-        static readonly TimeSpan JornadaPadrao = new TimeSpan(8, 30, 0); // 9h30min
+        private TimeSpan JornadaPadrao = new TimeSpan(8, 30, 0); 
+
 
         public FormPonto()
         {
@@ -25,6 +28,11 @@ namespace ControledePonto
 
             textBoxSite.Text = "https://rhid.com.br/v2/#/login";
             textBox1.ScrollBars = ScrollBars.Vertical;
+            maskedTextBoxCargaHoraria.Mask = "00:00:00";
+            maskedTextBoxCargaHoraria.ValidatingType = typeof(DateTime);
+
+            maskedTextBoxCargaHoraria.Text = "08:30:00"; // Carga horária padrão inicial
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,6 +44,15 @@ namespace ControledePonto
 
         private void Ponto(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(maskedTextBoxCargaHoraria.Text))
+            {
+                MessageBox.Show("Por favor, informe a carga horária padrão.");
+                return;
+            }
+
+            textBox1.Clear();
+
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Arquivos TXT|*.txt";
 
@@ -77,6 +94,10 @@ namespace ControledePonto
                 .GroupBy(r => r.Date)
                 .ToDictionary(g => g.Key, g => g.OrderBy(r => r).ToList());
 
+            DateTime _data = DateTime.Parse(maskedTextBoxCargaHoraria.Text);
+
+            JornadaPadrao = new TimeSpan(_data.Hour, _data.Minute, _data.Second );
+
             var resultados = new List<ResultadoDia>();
 
             foreach (var dia in agrupadoPorDia)
@@ -115,6 +136,15 @@ namespace ControledePonto
 
         private void ButtonAcessar_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(maskedTextBoxCargaHoraria.Text))
+            {
+                MessageBox.Show("Por favor, informe a carga horária padrão.");
+                return;
+            }
+
+            textBox1.Clear();
+
             var options = new ChromeOptions();
             // options.AddArgument("--headless"); // se quiser rodar sem abrir a janela
             options.AddArgument("--headless=new"); // Executa em background (modo invisível)
@@ -142,10 +172,15 @@ namespace ControledePonto
                 Thread.Sleep(9000);
 
                 driver.FindElement(By.Id("n_1")).SendKeys(dateTimePickerInicio.Text);
-                
-                ((IJavaScriptExecutor)driver).ExecuteScript("document.getElementById('n_2').value = arguments[0];", dateTimePickerFim.Text);
-                //((IJavaScriptExecutor)driver).ExecuteScript("document.getElementById('n_1').value = arguments[0];", dateTimePickerInicio.Text);
-                //driver.FindElement(By.Id("n_2")).SendKeys(dateTimePickerFim.Text); 
+
+                try
+                {
+                    driver.FindElement(By.Id("n_2")).SendKeys(dateTimePickerFim.Text);
+                }
+                catch (Exception)
+                {
+                    ((IJavaScriptExecutor)driver).ExecuteScript("document.getElementById('n_2').value = arguments[0];", dateTimePickerFim.Text);
+                }
 
                 driver.FindElement(By.Id("btnCalcula")).Click();
 
